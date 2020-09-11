@@ -19,6 +19,18 @@ const bassEQ = new BiquadFilterNode(context, {
     type: 'lowshelf',
     gain: bass.value
 })
+const midEQ = new BiquadFilterNode(context, {
+    frequency: 500,
+    type: 'peaking',
+    Q: Math.SQRT1_2, // no overlap between treble or bass
+    gain: mid.value
+})
+const trebleEQ = new BiquadFilterNode(context, {
+    frequency: 3000,
+    type: 'highshelf',
+    gain: treble.value
+})
+
 
 function setEventListeners() {
     window.onresize = crispCanvas;
@@ -29,6 +41,14 @@ function setEventListeners() {
     bass.oninput = event => {
         const value = parseInt(event.target.value);
         bassEQ.gain.setTargetAtTime(value, context.currentTime, 0.1)
+    }
+    mid.oninput = event => {
+        const value = parseInt(event.target.value);
+        midEQ.gain.setTargetAtTime(value, context.currentTime, 0.1)
+    }
+    treble.oninput = event => {
+        const value = parseInt(event.target.value);
+        trebleEQ.gain.setTargetAtTime(value, context.currentTime, 0.1)
     }
 }
 
@@ -47,6 +67,8 @@ async function setupAudioContext() {
     }
     const source = context.createMediaStreamSource(audio);
     source
+        .connect(trebleEQ)
+        .connect(midEQ)
         .connect(bassEQ)
         .connect(gainNode)
         .connect(analyzerNode)
