@@ -1,4 +1,5 @@
 @import url(./css/range.css);
+@import url(./css/select.css);
 
 :root{
     --palette-bg: #efefef;

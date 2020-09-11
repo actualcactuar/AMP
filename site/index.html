@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link href="main.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="container">
+      <div id="sidenav">
+        <h3>Source</h3>
+        <div class="form-field">
+          <label for="input">Input</label>
+          <select id="input">
+            <option value="" selected>null</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="output">Output</label>
+          <select id="output">
+            <option value="" selected>null</option>
+          </select>
+        </div>
+        <h3>Controls</h3>
+        <div class="form-field">
+          <label for="volume">Volume</label>
+          <input type="range" id="volume" />
+        </div>
+        <div class="form-field">
+          <label for="bass">Bass</label>
+          <input type="range" id="bass" />
+        </div>
+        <div class="form-field">
+          <label for="mid">Mid</label>
+          <input type="range" id="mid" />
+        </div>
+        <div class="form-field">
+          <label for="treble">Treble</label>
+          <input type="range" id="treble" />
+        </div>
+      </div>
+      <div id="visualizer"></div>
+    </div>
+    <script src="main.js" defer type="module"></script>
+  </body>
+</html>

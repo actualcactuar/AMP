@@ -1,0 +1,13 @@
+select{
+    width: 100%;
+    padding: 0.5rem 1rem;
+    border-radius: .25rem;
+    background-color: var(--palette-border);
+    border:none;
+    color:inherit;
+    outline:none;
+    margin-top:.5rem;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
