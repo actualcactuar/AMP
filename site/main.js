@@ -1,4 +1,4 @@
-import { buildOptions, getAudio } from './js/utils.js';
+import { buildOptions, getAudio, drawVisualizer, crispCanvas } from './js/utils.js';
 
 const volume = document.getElementById('volume');
 const bass = document.getElementById('bass');
@@ -19,53 +19,22 @@ async function getAudioIO() {
     buildOptions('#output').from(outputs);
 }
 
-function crispCanvas(){
-    visualizer.width = visualizer.clientWidth * window.devicePixelRatio;
-    visualizer.height = visualizer.clientHeight * window.devicePixelRatio;
-}
-
-function drawVisualizer() {
-    requestAnimationFrame(drawVisualizer);
-
-    const bufferLength = analyzerNode.frequencyBinCount;
-    const dataArray = new Uint8Array(bufferLength);
-    analyzerNode.getByteFrequencyData(dataArray);
-    const width = visualizer.width;
-    const height = visualizer.height;
-    const barWidth = Math.round(width / bufferLength);
-    const canvasContext = visualizer.getContext('2d');
-    canvasContext.clearRect(0, 0, width, height);
-    dataArray.forEach((item, index) => {
-        const y = item / 256 * height / 2;
-        const left = width / 2 - barWidth * index
-        const right = width / 2 + barWidth * index
-        canvasContext.fillStyle = `hsl(${y / height * 100 + 275},100%,50%)`;
-        canvasContext.fillRect(left, (height - y) / 2, barWidth, y);
-        canvasContext.fillRect(right, (height - y) / 2, barWidth, y);
-    })
-}
-
 async function setupAudioContext() {
     const audio = await getAudio();
     if (context.state === 'suspended') {
         await context.resume();
     }
-
     const source = context.createMediaStreamSource(audio);
-
     source
         .connect(analyzerNode)
         .connect(context.destination)
 }
 
-
-
 async function App() {
     await getAudioIO();
     await setupAudioContext();
-    drawVisualizer();
-    crispCanvas();
-
+    drawVisualizer(visualizer,analyzerNode);
+    crispCanvas(visualizer);
     window.onresize = crispCanvas;
 }
 
