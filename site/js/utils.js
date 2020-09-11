@@ -14,3 +14,12 @@ export function buildOptions(selector) {
 
     return { from };
 }
+export function getAudio() {
+    const audio = {
+        echoCancellation: false,
+        autoGainControl: false,
+        noiseSupression: false,
+        latency: 0
+    }
+    return navigator.mediaDevices.getUserMedia({ audio })
+}

@@ -53,6 +53,7 @@ body{
 
 #visualizer{
     flex:1;
+    pointer-events: none;
 }
 
 .form-field:not(:last-child){

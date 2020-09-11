@@ -21,22 +21,22 @@
         <h3>Controls</h3>
         <div class="form-field">
           <label for="volume">Volume</label>
-          <input type="range" id="volume" />
+          <input type="range" id="volume" min="0" max="1" value="0.5" step=".01"/>
         </div>
         <div class="form-field">
           <label for="bass">Bass</label>
-          <input type="range" id="bass" />
+          <input type="range" id="bass" min="0" max="1" value="0.5" step=".01" />
         </div>
         <div class="form-field">
           <label for="mid">Mid</label>
-          <input type="range" id="mid" />
+          <input type="range" id="mid" min="0" max="1" value="0.5" step=".01" />
         </div>
         <div class="form-field">
           <label for="treble">Treble</label>
-          <input type="range" id="treble" />
+          <input type="range" id="treble" min="0" max="1" value="0.5" step=".01" />
         </div>
       </div>
-      <div id="visualizer"></div>
+      <canvas id="visualizer"></canvas>
     </div>
     <script src="main.js" defer type="module"></script>
   </body>
