@@ -7,7 +7,7 @@ const treble = document.getElementById('treble');
 const visualizer = document.getElementById('visualizer');
 const input = document.getElementById('input');
 const output = document.getElementById('output');
-const fftSize = 256
+const fftSize = 512
 const context = new AudioContext();
 const analyzerNode = new AnalyserNode(context, { fftSize })
 
@@ -33,13 +33,15 @@ function drawVisualizer() {
     const width = visualizer.width;
     const height = visualizer.height;
     const barWidth = Math.round(width / bufferLength);
-    const cancvasContext = visualizer.getContext('2d');
-    cancvasContext.clearRect(0, 0, width, height);
+    const canvasContext = visualizer.getContext('2d');
+    canvasContext.clearRect(0, 0, width, height);
     dataArray.forEach((item, index) => {
-        const y = item / fftSize * height / 2;
-        const x = barWidth * index
-        cancvasContext.fillStyle = `hsl(${y / height * 400},100%,50%)`;
-        cancvasContext.fillRect(x, height - y, barWidth, y);
+        const y = item / 256 * height / 2;
+        const left = width / 2 - barWidth * index
+        const right = width / 2 + barWidth * index
+        canvasContext.fillStyle = `hsl(${y / height * 100 + 275},100%,50%)`;
+        canvasContext.fillRect(left, (height - y) / 2, barWidth, y);
+        canvasContext.fillRect(right, (height - y) / 2, barWidth, y);
     })
 }
 
@@ -59,10 +61,10 @@ async function setupAudioContext() {
 
 
 async function App() {
-    crispCanvas();
-    await getAudioIO()
+    await getAudioIO();
     await setupAudioContext();
-    drawVisualizer()
+    drawVisualizer();
+    crispCanvas();
 
     window.onresize = crispCanvas;
 }
