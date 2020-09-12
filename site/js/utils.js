@@ -40,10 +40,10 @@ export function drawVisualizer(visualizer, analyzerNode) {
     const canvasContext = visualizer.getContext('2d');
     canvasContext.clearRect(0, 0, width * 2, height * 2);
     dataArray.forEach((item, index) => {
-        const y = Math.round((item / 100) * (height / 4));
+        const y = Math.round((item / 100) * (height / 8));
         const left = Math.round(width - barWidth * index)
         const right = Math.round(width + barWidth * index);
-        const hue = Math.round(y / height * 100 + 275)
+        const hue = Math.round(y / height * 50 + 275)
         const h = Math.round((height - y) / 2);
         canvasContext.fillStyle = `hsl(${hue},100%,50%)`;
         canvasContext.fillRect(left, h, barWidth, y);
