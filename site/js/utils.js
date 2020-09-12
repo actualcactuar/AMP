@@ -19,16 +19,14 @@ export function getAudio() {
         echoCancellation: false,
         autoGainControl: false,
         noiseSupression: false,
-        latency: 0,
+        latency: 0
     }
-    return navigator.mediaDevices.getUserMedia({
-        audio
-    })
+    return navigator.mediaDevices.getUserMedia({ audio })
 }
 
 export function crispCanvas(visualizer) {
-    visualizer.width = visualizer.clientWidth;
-    visualizer.height = visualizer.clientHeight;
+    visualizer.width = visualizer.clientWidth * window.devicePixelRatio;
+    visualizer.height = visualizer.clientHeight * window.devicePixelRatio;
 }
 
 export function drawVisualizer(visualizer, analyzerNode) {
@@ -36,21 +34,19 @@ export function drawVisualizer(visualizer, analyzerNode) {
     const bufferLength = analyzerNode.frequencyBinCount;
     const dataArray = new Uint8Array(bufferLength);
     analyzerNode.getByteFrequencyData(dataArray);
-    const width = Math.round(visualizer.width);
+    const width = Math.round(visualizer.width / 2);
     const height = visualizer.height;
     const barWidth = Math.round(width / bufferLength);
     const canvasContext = visualizer.getContext('2d');
     canvasContext.clearRect(0, 0, width * 2, height * 2);
     dataArray.forEach((item, index) => {
         const y = Math.round((item / 100) * (height / 4));
-        const x = Math.round(barWidth * index);
         const left = Math.round(width - barWidth * index)
         const right = Math.round(width + barWidth * index);
         const hue = Math.round(y / height * 100 + 275)
-        const h = Math.round((height - y));
+        const h = Math.round((height - y) / 2);
         canvasContext.fillStyle = `hsl(${hue},100%,50%)`;
-        // canvasContext.fillRect(left, h, barWidth, y);
-        // canvasContext.fillRect(right, h, barWidth, y);
-        canvasContext.fillRect(x, h, barWidth, y);
+        canvasContext.fillRect(left, h, barWidth, y);
+        canvasContext.fillRect(right, h, barWidth, y);
     })
 }
