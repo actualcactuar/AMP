@@ -34,17 +34,19 @@ export function drawVisualizer(visualizer, analyzerNode) {
     const bufferLength = analyzerNode.frequencyBinCount;
     const dataArray = new Uint8Array(bufferLength);
     analyzerNode.getByteFrequencyData(dataArray);
-    const width = visualizer.width / 2;
+    const width = Math.round(visualizer.width / 2);
     const height = visualizer.height;
     const barWidth = Math.round(width / bufferLength);
     const canvasContext = visualizer.getContext('2d');
     canvasContext.clearRect(0, 0, width * 2, height * 2);
     dataArray.forEach((item, index) => {
-        const y = (item / 100) * (height / 4);
-        const left = width - barWidth * index
-        const right = width + barWidth * index
-        canvasContext.fillStyle = `hsl(${y / height * 100 + 275},100%,50%)`;
-        canvasContext.fillRect(left, (height - y) / 2, barWidth, y);
-        canvasContext.fillRect(right, (height - y) / 2, barWidth, y);
+        const y = Math.round((item / 100) * (height / 4));
+        const left = Math.round(width - barWidth * index)
+        const right = Math.round(width + barWidth * index);
+        const hue = Math.round(y / height * 100 + 275)
+        const h = Math.round((height - y) / 2);
+        canvasContext.fillStyle = `hsl(${hue},100%,50%)`;
+        canvasContext.fillRect(left, h, barWidth, y);
+        canvasContext.fillRect(right, h, barWidth, y);
     })
 }
