@@ -10,7 +10,7 @@ const input = document.getElementById('input');
 const output = document.getElementById('output');
 
 // AUDIO CONTEXT
-const fftSize = 512
+const fftSize = 256
 const context = new AudioContext();
 const analyzerNode = new AnalyserNode(context, { fftSize })
 const gainNode = new GainNode(context, { gain: volume.value })
