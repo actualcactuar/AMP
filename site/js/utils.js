@@ -19,7 +19,9 @@ export function getAudio() {
         echoCancellation: false,
         autoGainControl: false,
         noiseSupression: false,
-        latency: 0
+        latency: 0,
+        sampleRate: 48000,
+        sampleSize: 16
     }
     return navigator.mediaDevices.getUserMedia({ audio })
 }
@@ -40,7 +42,7 @@ export function drawVisualizer(visualizer, analyzerNode) {
     const canvasContext = visualizer.getContext('2d');
     canvasContext.clearRect(0, 0, width * 2, height * 2);
     dataArray.forEach((item, index) => {
-        const y = Math.round((item / 100) * (height / 8));
+        const y = Math.round((item / 255) * (height / 2 )); // Items value range is between 0 - 255
         const left = Math.round(width - barWidth * index)
         const right = Math.round(width + barWidth * index);
         const hue = Math.round(y / height * 50 + 275)
