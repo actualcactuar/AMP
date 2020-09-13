@@ -6,6 +6,7 @@ const bass = document.getElementById('bass');
 const mid = document.getElementById('mid');
 const treble = document.getElementById('treble');
 const visualizer = document.getElementById('visualizer');
+const fftForm = document.getElementById('fftForm');
 const input = document.getElementById('input');
 const output = document.getElementById('output');
 
@@ -50,10 +51,20 @@ function setEventListeners() {
         const value = parseInt(event.target.value);
         trebleEQ.gain.setTargetAtTime(value, context.currentTime, 0.1)
     }
+    fftForm.oninput = event => {
+        const form = event.target.closest('form');
+        const { fftIncrement, fftBaseValue } = Object.fromEntries(new FormData(form))
+        const base = parseInt(fftBaseValue);
+        const increment = parseInt(fftIncrement);
+        const outputValue = Math.round(base * Math.pow(2, increment));
+        analyzerNode.fftSize = outputValue;
+        console.log({outputValue})
+    }
 }
 
 async function getAudioIO() {
     const allDevices = await navigator.mediaDevices.enumerateDevices();
+    console.log({ allDevices })
     const inputs = allDevices.filter(device => device.kind === 'audioinput')
     const outputs = allDevices.filter(device => device.kind === 'audiooutput')
     buildOptions('#input').from(inputs);

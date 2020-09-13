@@ -35,6 +35,12 @@
           <label for="treble">Treble</label>
           <input type="range" id="treble"  min="-10" max="10" value="0"  />
         </div>
+        <h3>Config</h3>
+        <form class="form-field" id="fftForm">
+          <label for="fftSize">FFT Size</label>
+          <input type="range" name="fftIncrement"  id="fftSize" min="0" max="5" value="5"  />
+          <input type="hidden" name="fftBaseValue"  value="32"  />
+        </form>
       </div>
       <canvas id="visualizer"></canvas>
     </div>
