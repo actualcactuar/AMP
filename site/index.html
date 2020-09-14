@@ -11,8 +11,12 @@
       <div id="sidenav">
         <h3>Source</h3>
         <div class="form-field">
-          <label for="input">Input</label>
+          <label for="input">Audio input</label>
           <select id="input"></select>
+        </div>
+        <div class="form-field">
+          <label for="videoInput">Video input</label>
+          <select id="videoInput"></select>
         </div>
         <div class="form-field">
           <label for="output">Output</label>
@@ -43,6 +47,7 @@
         </form>
       </div>
       <canvas id="visualizer"></canvas>
+      <video id="videoSrc" muted autoplay></video>
     </div>
     <script src="main.js" defer type="module"></script>
   </body>

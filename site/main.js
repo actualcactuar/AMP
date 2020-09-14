@@ -9,6 +9,8 @@ const visualizer = document.getElementById('visualizer');
 const fftForm = document.getElementById('fftForm');
 const inputSource = document.getElementById('input');
 const output = document.getElementById('output');
+const videoInputSource = document.getElementById('videoInput');
+const player = document.getElementById('videoSrc');
 const mediaSources = new Map();
 
 // AUDIO CONTEXT
@@ -72,14 +74,21 @@ function setEventListeners() {
 
         setupAudioContext(deviceId);
     }
+    videoInputSource.onchange = async event => {
+        const deviceId = event.target.value;
+        const video = await navigator.mediaDevices.getUserMedia({ video: { deviceId } });
+        player.srcObject = video;
+    }
 }
 
 async function getAudioIO() {
     const allDevices = await navigator.mediaDevices.enumerateDevices();
     const inputs = allDevices.filter(device => device.kind === 'audioinput')
     const outputs = allDevices.filter(device => device.kind === 'audiooutput')
+    const videoInputs = allDevices.filter(device => device.kind === 'videoinput')
     buildOptions('#input').from(inputs);
     buildOptions('#output').from(outputs);
+    buildOptions('#videoInput').from(videoInputs)
 }
 
 async function setupAudioContext(deviceId = "default") {
