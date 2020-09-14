@@ -7,8 +7,9 @@ const mid = document.getElementById('mid');
 const treble = document.getElementById('treble');
 const visualizer = document.getElementById('visualizer');
 const fftForm = document.getElementById('fftForm');
-const input = document.getElementById('input');
+const inputSource = document.getElementById('input');
 const output = document.getElementById('output');
+const mediaSources = new Map();
 
 // AUDIO CONTEXT
 const fftSize = 1024
@@ -31,6 +32,8 @@ const trebleEQ = new BiquadFilterNode(context, {
     type: 'highshelf',
     gain: treble.value
 })
+
+window.test = context;
 
 
 function setEventListeners() {
@@ -58,21 +61,30 @@ function setEventListeners() {
         const increment = parseInt(fftIncrement);
         const outputValue = Math.round(base * Math.pow(2, increment));
         analyzerNode.fftSize = outputValue;
-        console.log({outputValue})
+        console.log({ outputValue })
+    }
+    inputSource.onchange = event => {
+        const deviceId = event.target.value;
+
+        for (const source of mediaSources.values()) {
+            source.disconnect();
+        }
+
+        setupAudioContext(deviceId);
     }
 }
 
 async function getAudioIO() {
     const allDevices = await navigator.mediaDevices.enumerateDevices();
-    console.log({ allDevices })
     const inputs = allDevices.filter(device => device.kind === 'audioinput')
     const outputs = allDevices.filter(device => device.kind === 'audiooutput')
     buildOptions('#input').from(inputs);
     buildOptions('#output').from(outputs);
 }
 
-async function setupAudioContext() {
-    const audio = await getAudio();
+async function setupAudioContext(deviceId = "default") {
+    const audio = await getAudio(deviceId);
+
     if (context.state === 'suspended') {
         await context.resume();
     }
@@ -84,6 +96,8 @@ async function setupAudioContext() {
         .connect(gainNode)
         .connect(analyzerNode)
         .connect(context.destination)
+
+    mediaSources.set(deviceId, source);
 }
 
 async function App() {

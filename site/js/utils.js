@@ -14,14 +14,15 @@ export function buildOptions(selector) {
 
     return { from };
 }
-export function getAudio() {
+export function getAudio(deviceId = 'default') {
     const audio = {
         echoCancellation: false,
         autoGainControl: false,
         noiseSupression: false,
         latency: 0,
         sampleRate: 48000,
-        sampleSize: 16
+        sampleSize: 16,
+        deviceId
     }
     return navigator.mediaDevices.getUserMedia({ audio })
 }
@@ -32,6 +33,8 @@ export function crispCanvas(visualizer) {
 }
 
 export function drawVisualizer(visualizer, analyzerNode) {
+    if(analyzerNode.context.state !== 'running') return;
+    console.log('draw')
     requestAnimationFrame(drawVisualizer.bind(null, visualizer, analyzerNode));
     const bufferLength = analyzerNode.frequencyBinCount;
     const dataArray = new Uint8Array(bufferLength);
