@@ -34,7 +34,6 @@ export function crispCanvas(visualizer) {
 
 export function drawVisualizer(visualizer, analyzerNode) {
     if(analyzerNode.context.state !== 'running') return;
-    console.log('draw')
     requestAnimationFrame(drawVisualizer.bind(null, visualizer, analyzerNode));
     const bufferLength = analyzerNode.frequencyBinCount;
     const dataArray = new Uint8Array(bufferLength);
