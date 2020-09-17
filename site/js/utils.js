@@ -68,7 +68,7 @@ export const drawVisualizerArc = (visualizer, analyzerNode) => {
     canvasContext.clearRect(0, 0, width * 2, height * 2);
     dataArray.forEach((item) => {
       const radius = Math.round((item / 255) * (x / 2));
-      canvasContext.fillStyle = `rgba(255,255,255,0.25)`;
+      canvasContext.fillStyle = `rgba(255,255,255,0.1)`;
       canvasContext.beginPath();
       canvasContext.arc(x, y, radius, 0, 2 * Math.PI);
       canvasContext.fill();
