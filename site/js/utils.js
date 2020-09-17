@@ -28,8 +28,8 @@ export function getAudio(deviceId = 'default') {
 }
 
 export function crispCanvas(visualizer) {
-    visualizer.width = visualizer.clientWidth * window.devicePixelRatio;
-    visualizer.height = visualizer.clientHeight * window.devicePixelRatio;
+    visualizer.width = visualizer.clientWidth;
+    visualizer.height = visualizer.clientHeight;
 }
 
 export function drawVisualizer(visualizer, analyzerNode) {
@@ -54,3 +54,24 @@ export function drawVisualizer(visualizer, analyzerNode) {
         canvasContext.fillRect(right, h, barWidth, y);
     })
 }
+
+
+// visualizer fftsize 32
+export const drawVisualizerArc = (visualizer, analyzerNode) => {
+    requestAnimationFrame(drawVisualizerArc.bind(null, visualizer, analyzerNode));
+    const dataArray = new Uint8Array(analyzerNode.frequencyBinCount);
+    analyzerNode.getByteFrequencyData(dataArray);
+    const { width, height } = visualizer;
+    const x = Math.round(width / 2);
+    const y = Math.round(height / 2);
+    const canvasContext = visualizer.getContext('2d');
+    canvasContext.clearRect(0, 0, width * 2, height * 2);
+    dataArray.forEach((item) => {
+      const radius = Math.round((item / 255) * (x / 2));
+      canvasContext.fillStyle = `rgba(255,255,255,0.25)`;
+      canvasContext.beginPath();
+      canvasContext.arc(x, y, radius, 0, 2 * Math.PI);
+      canvasContext.fill();
+    });
+    // console.log(dataArray);
+  };
