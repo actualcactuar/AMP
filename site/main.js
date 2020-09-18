@@ -1,4 +1,4 @@
-import { buildOptions, getAudio, drawVisualizerArc, crispCanvas } from './js/utils.js';
+import { buildOptions, getAudio, drawVisualizer, crispCanvas } from './js/utils.js';
 
 // DOM
 const volume = document.getElementById('volume');
@@ -12,7 +12,7 @@ const output = document.getElementById('output');
 const mediaSources = new Map();
 
 // AUDIO CONTEXT
-const fftSize = 32
+const fftSize = 1024;
 const context = new AudioContext();
 const analyzerNode = new AnalyserNode(context, { fftSize })
 const gainNode = new GainNode(context, { gain: volume.value })
@@ -103,7 +103,7 @@ async function setupAudioContext(deviceId = "default") {
 async function App() {
     await getAudioIO();
     await setupAudioContext();
-    drawVisualizerArc(visualizer, analyzerNode);
+    drawVisualizer(visualizer, analyzerNode);
     crispCanvas(visualizer);
     setEventListeners();
 }
