@@ -1,0 +1,10 @@
+version: "3"
+services:
+  proxy:
+    container_name: proxy
+    image: caddy:2.1.1
+    volumes:
+      - ./site/:/usr/share/caddy/
+      - ./Caddyfile:/etc/caddy/Caddyfile
+    ports:
+      - 4443:8080
