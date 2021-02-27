@@ -9,37 +9,76 @@
   <body>
     <div id="container">
       <div id="sidenav">
+        <h3>Actions</h3>
+        <button id="start">Start</button>
+        <button id="stop">Stop</button>
         <h3>Source</h3>
-        <div class="form-field">
+        <!-- <div class="form-field">
           <label for="input">Input</label>
           <select id="input"></select>
         </div>
         <div class="form-field">
           <label for="output">Output</label>
           <select id="output"></select>
+        </div> -->
+        <div class="form-field">
+          <label for="oscillatorTone">Oscillator tone</label>
+          <select id="oscillatorTone">
+            <optgroup label="Guitar (std tuning)">
+              <option value="329.63">E4</option>
+              <option value="246.94">B3</option>
+              <option value="196.00">G3</option>
+              <option value="146.83" selected>D3</option>
+              <option value="110.00">A2</option>
+              <option value="82.41">E2</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="oscillatorType">Oscillator tone</label>
+          <select id="oscillatorType">
+            <option value="sine" selected>Sine</option>
+            <option value="square">Square</option>
+            <option value="triangle">Triangle</option>
+            <option value="sawtooth">Sawtooth</option>
+          </select>
         </div>
         <h3>Controls</h3>
         <div class="form-field">
           <label for="volume">Volume</label>
-          <input type="range" id="volume" min="0" max="1" value="0" step=".01"/>
+          <input
+            type="range"
+            id="volume"
+            min="0"
+            max="1"
+            value="0"
+            step=".01"
+          />
         </div>
         <div class="form-field">
           <label for="bass">Bass</label>
-          <input type="range" id="bass" min="-10" max="10" value="0"  />
+          <input type="range" id="bass" min="-10" max="10" value="0" />
         </div>
         <div class="form-field">
           <label for="mid">Mid</label>
-          <input type="range" id="mid"  min="-10" max="10" value="0"  />
+          <input type="range" id="mid" min="-10" max="10" value="0" />
         </div>
         <div class="form-field">
           <label for="treble">Treble</label>
-          <input type="range" id="treble"  min="-10" max="10" value="0"  />
+          <input type="range" id="treble" min="-10" max="10" value="0" />
         </div>
         <h3>Config</h3>
         <form class="form-field" id="fftForm">
           <label for="fftSize">FFT Size</label>
-          <input type="range" name="fftIncrement"  id="fftSize" min="0" max="5" value="5"  />
-          <input type="hidden" name="fftBaseValue"  value="32"  />
+          <input
+            type="range"
+            name="fftIncrement"
+            id="fftSize"
+            min="0"
+            max="5"
+            value="2"
+          />
+          <input type="hidden" name="fftBaseValue" value="32" />
         </form>
       </div>
       <canvas id="visualizer"></canvas>

@@ -1,11 +1,13 @@
 @import url(./css/range.css);
 @import url(./css/select.css);
+@import url(./css/button.css);
 
 :root{
     --palette-bg: #fefefe;
     --palette-fg: #fff;
     --palette-border: #dadada;
     --palette-primary: #3886e6;
+    --palette-main-rgb: 56, 134, 230;
     --palette-text: #2d2d3b;
 }
 
@@ -15,6 +17,7 @@
         --palette-fg:#323341;
         --palette-border: #4d4d67;
         --palette-primary: #467dc0;
+        --palette-main-rgb: 70, 125, 192;
         --palette-text: #efefef;
     }
 }
@@ -36,8 +39,8 @@ body{
 }
 
 #container{
-    width: 60rem;
-    height: 40rem;
+    width: 65rem;
+    height: 45rem;
     background-color: var(--palette-fg);
     box-shadow: 0 2px 4px 0px rgba(0,0,0,0.5);
     border-radius: 4px;
